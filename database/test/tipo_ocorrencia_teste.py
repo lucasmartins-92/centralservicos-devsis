@@ -18,7 +18,8 @@ def listar():
     dao = TipoOcorrenciaDAO()
     lista = dao.read_all()
     for to in lista:
-        print(to.idt_tipo_ocorrencia, ' - ', to.nme_tipo_ocorrencia, ' - ', to.txt_tipo_ocorrencia)
+        print(to.idt_tipo_ocorrencia, ' - ', to.nme_tipo_ocorrencia, ' - ', to.txt_tipo_ocorrencia) 
+
 
 if __name__ == '__main__':
     while True:
@@ -26,6 +27,7 @@ if __name__ == '__main__':
         1 - Incluir
         2 - Listar
         3 - Sair
+        Escolha uma opção.
         '''))
         if opc == 1:
             incluir()
