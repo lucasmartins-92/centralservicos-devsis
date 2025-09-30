@@ -1,11 +1,14 @@
 from flask import Flask, render_template
 from urls.adm.setor import bp_setor
 from urls.adm.servico import bp_serv
+from urls.adm.tipo_ocorrencia import bp_tipo_ocorrencia
 
 app = Flask(__name__)
 
 app.register_blueprint(bp_setor)
 app.register_blueprint(bp_serv)
+app.register_blueprint(bp_tipo_ocorrencia)
+
 
 
 @app.route('/')

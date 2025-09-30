@@ -1,4 +1,4 @@
-from model_dao import DAO
+from database.model_dao import DAO
 
 class TipoOcorrenciaDAO(DAO):
     def __init__(self):
