@@ -1,27 +1,37 @@
 from flask import Blueprint, render_template, request
+
+from database.setor_dao import SetorDAO
 from database.servico_dao import ServicoDAO
 
-bp_serv = Blueprint('serv', __name__, template_folder="templates", url_prefix='/adm/serv')
+bp_serv = Blueprint('serv', __name__, url_prefix='/adm/serv')
 
 
 @bp_serv.route('/incluir')  # /adm/serv/incluir
 def incluir():
-    return render_template('adm/serv/incluir.html', msg="", css_msg="")
+    dao = SetorDAO()
+    lst_setores = dao.read_by_filters([('sts_setor', '=', 'A')])
+    return render_template('adm/serv/incluir.html', msg="", css_msg="", lst_setores=lst_setores)
 
 
 @bp_serv.route('/salvar_incluir', methods=['POST'])  # /adm/serv/incluir
 def salvar_incluir():
     dao = ServicoDAO()
     serv = dao.new_object()
-    serv.sgl_serv = request.form['sgl_serv']
-    serv.nme_serv = request.form['nme_serv']
-    serv.eml_serv = request.form['eml_serv']
-    serv.sts_serv = request.form['sts_serv']
+    serv.nme_servico = request.form['nme_servico']
+    serv.num_dias_servico = request.form['num_dias_servico']
+    serv.vlr_servico = request.form['vlr_servico']
+    serv.txt_modelo_servico = request.form['txt_modelo_servico']
+    serv.sts_servico = request.form['sts_servico']
+    serv.cod_setor = request.form['cod_setor']
+
     if dao.insert(serv):
-        msg = f"Serviço número {serv.idt_serv} inserido com sucesso!"
+        msg = f"Serviço número {serv.idt_servico} inserido com sucesso!"
         css_msg = "sucesso"
     else:
         msg = "Erro ao tentar incluir serviço!"
         css_msg = "erro"
 
-    return render_template('adm/serv/incluir.html', msg=msg, css_msg=css_msg)
+    dao_setor = SetorDAO()
+    lst_setores = dao_setor.read_by_filters([('sts_setor', '=', 'A')])
+
+    return render_template('adm/serv/incluir.html', msg=msg, css_msg=css_msg, lst_setores=lst_setores)
