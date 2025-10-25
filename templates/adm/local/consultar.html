@@ -1,0 +1,65 @@
+{% extends "adm/base_adm.html" %}
+
+
+{% block content %}
+    <main>
+        <section class="form-section">
+            <h2>Consultar Locais</h2>
+            <form id="consultarForm" class="consultar-form" action="/adm/local/roda_consultar" method="POST">
+                <div class="form-group">
+                    <label for="nme_local">Nome do Local:</label>
+                    <input type="text" id="nme_local" name="nme_local" placeholder="Digite o nome para filtrar">
+                </div>
+                <div class="form-group">
+                    <label for="cod_setor">Setor:</label>
+                    <select id="cod_setor" name="cod_setor">
+                        <option value="">Todos os Setores</option>
+                        {% for setor in setores %}
+                            <option value="{{ setor.idt_setor }}">{{ setor.sgl_setor }} - {{ setor.nme_setor }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Buscar</button>
+            </form>
+        </section>
+
+        <section class="table-section">
+            <p>Total de registros encontrados: <strong>{{ locais | length }}</strong></p>
+            <div class="table-container">
+                <table id="locaisTable" class="data-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nome</th>
+                            <th>Latitude</th>
+                            <th>Longitude</th>
+                            <th>Setor</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in locais %}
+                        <tr>
+                            <td>{{ item.idt_local }}</td>
+                            <td>{{ item.nme_local }}</td>
+                            <td>{{ item.lat_local }}</td>
+                            <td>{{ item.lgt_local }}</td>
+                            <td>{{ item.tt_setor.nme_setor if item.tt_setor else item.cod_setor }}</td>
+                            <td>{{ "Ativo" if item.sts_local == 'A' else "Inativo" }}</td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <td colspan="6">Nenhum local encontrado.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% if filtro_usado %}
+            <div class="filter-footer">
+                <p>Filtro usado: <strong>{{ filtro_usado }}</strong></p>
+            </div>
+            {% endif %}
+        </section>
+    </main>
+{% endblock %}
