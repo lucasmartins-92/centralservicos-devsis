@@ -78,6 +78,67 @@ def roda_consultar():
     )
 
 
+@bp_local.route("/alterar/<int:idt>")
+def alterar(idt):
+    dao = LocalDAO()
+    obj = dao.read_by_idt(idt)
+    if not obj:
+        return render_template(
+            "adm/local/atualizar.html",
+            msg="Local não encontrado.",
+            css_msg="erro",
+            locais=[],
+            setores=[],
+            filtro_usado="",
+        )
+
+    dao_setor = SetorDAO()
+    lst_setores = dao_setor.read_by_filters([("sts_setor", "=", "A")])
+    return render_template(
+        "adm/local/alterar.html", local=obj, lst_setores=lst_setores, msg="", css_msg=""
+    )
+
+
+@bp_local.route("/salvar_alterar", methods=["POST"])
+def salvar_alterar():
+    dao = LocalDAO()
+    idt = int(request.form["idt_local"])
+    obj = dao.read_by_idt(idt)
+
+    if not obj:
+        return render_template(
+            "adm/local/atualizar.html",
+            msg="Local não encontrado.",
+            css_msg="erro",
+            locais=[],
+            setores=[],
+            filtro_usado="",
+        )
+
+    # Atualiza campos
+    obj.nme_local = request.form["nme_local"]
+    obj.lat_local = request.form["lat_local"]
+    obj.lgt_local = request.form["lgt_local"]
+    obj.cod_setor = request.form["cod_setor"]
+    obj.sts_local = request.form["sts_local"]
+
+    if dao.update(obj):
+        msg = f"Local número {obj.idt_local} atualizado com sucesso!"
+        css_msg = "sucesso"
+    else:
+        msg = "Erro ao tentar atualizar o local!"
+        css_msg = "erro"
+
+    # Recarrega listas auxiliares e objeto
+    dao_setor = SetorDAO()
+    lst_setores = dao_setor.read_by_filters([("sts_setor", "=", "A")])
+    obj = dao.read_by_idt(idt)
+
+    return render_template(
+        "adm/local/alterar.html", local=obj, lst_setores=lst_setores, msg=msg, css_msg=css_msg
+    )
+
+
 @bp_local.route("/atualizar")  # /adm/local/atualizar
 def atualizar():
     dao_setor = SetorDAO()

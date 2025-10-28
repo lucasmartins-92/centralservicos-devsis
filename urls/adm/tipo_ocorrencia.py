@@ -85,3 +85,31 @@ def alterar(idt):
         return render_template('adm/tipo_ocorrencia/atualizar.html', msg='Tipo de ocorrência não encontrado.',
                                css_msg='erro', tipos_ocorrencia=[], filtro_usado='')
     return render_template('adm/tipo_ocorrencia/alterar.html', tipo_ocorrencia=tipo, msg='', css_msg='')
+
+
+@bp_tipo_ocorrencia.route('/salvar_alterar', methods=['POST'])  # /adm/tipo_ocorrencia/salvar_alterar
+def salvar_alterar():
+    dao = TipoOcorrenciaDAO()
+    idt = int(request.form['idt_tipo_ocorrencia'])
+    tipo = dao.read_by_idt(idt)
+
+    if not tipo:
+        return render_template('adm/tipo_ocorrencia/atualizar.html', msg='Tipo de ocorrência não encontrado.',
+                               css_msg='erro', tipos_ocorrencia=[], filtro_usado='')
+
+    # Atualiza os campos com os valores do formulário
+    tipo.nme_tipo_ocorrencia = request.form['nme_tipo_ocorrencia']
+    tipo.tpo_tipo_ocorrencia = request.form['tpo_tipo_ocorrencia']
+    tipo.txt_modelo_ocorrencia = request.form['txt_modelo_ocorrencia']
+    tipo.sts_tipo_ocorrencia = request.form['sts_tipo_ocorrencia']
+
+    if dao.update(tipo):
+        msg = f"Tipo de Ocorrência número {tipo.idt_tipo_ocorrencia} atualizado com sucesso!"
+        css_msg = 'sucesso'
+    else:
+        msg = 'Erro ao tentar atualizar o tipo de ocorrência!'
+        css_msg = 'erro'
+
+    # Recarrega o objeto atualizado e renderiza a página de alteração com mensagem
+    tipo = dao.read_by_idt(idt)
+    return render_template('adm/tipo_ocorrencia/alterar.html', tipo_ocorrencia=tipo, msg=msg, css_msg=css_msg)
