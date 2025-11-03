@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request
-from werkzeug.security import generate_password_hash
+import hashlib
 
 from database.prestador_dao import PrestadorDAO
 from database.setor_dao import SetorDAO
@@ -24,7 +24,7 @@ def salvar_incluir():
     pre.tel_prestador = request.form.get("tel_prestador")
     pre.rml_prestador = request.form.get("rml_prestador")
     pwd = request.form.get("pwd_prestador")
-    pre.pwd_prestador = generate_password_hash(pwd) if pwd else None
+    pre.pwd_prestador = hashlib.sha256(pwd.encode('utf-8')).hexdigest() if pwd else None
     pre.sts_prestador = request.form.get("sts_prestador")
     cod_setor = request.form.get("cod_setor")
     pre.cod_setor = int(cod_setor) if cod_setor else None
@@ -101,7 +101,7 @@ def salva_alterar():
     pre.rml_prestador = request.form.get('rml_prestador')
     pwd = request.form.get('pwd_prestador')
     if pwd:
-        pre.pwd_prestador = generate_password_hash(pwd)
+        pre.pwd_prestador = hashlib.sha256(pwd.encode('utf-8')).hexdigest()
     pre.sts_prestador = request.form.get('sts_prestador')
     cod_setor = request.form.get('cod_setor')
     pre.cod_setor = int(cod_setor) if cod_setor else None

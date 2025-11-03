@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request
-from werkzeug.security import generate_password_hash
+import hashlib
 
 from database.empregado_dao import EmpregadoDAO
 from database.local_dao import LocalDAO
@@ -24,7 +24,7 @@ def salvar_incluir():
     emp.tel_empregado = request.form.get("tel_empregado")
     emp.rml_empregado = request.form.get("rml_empregado")
     pwd = request.form.get("pwd_empregado")
-    emp.pwd_empregado = generate_password_hash(pwd) if pwd else None
+    emp.pwd_empregado = hashlib.sha256(pwd.encode('utf-8')).hexdigest() if pwd else None
     emp.sts_empregado = request.form.get("sts_empregado")
     cod_local = request.form.get("cod_local")
     emp.cod_local = int(cod_local) if cod_local else None
@@ -101,7 +101,7 @@ def salva_alterar():
     emp.rml_empregado = request.form.get('rml_empregado')
     pwd = request.form.get('pwd_empregado')
     if pwd:
-        emp.pwd_empregado = generate_password_hash(pwd)
+        emp.pwd_empregado = hashlib.sha256(pwd.encode('utf-8')).hexdigest()
     emp.sts_empregado = request.form.get('sts_empregado')
     cod_local = request.form.get('cod_local')
     emp.cod_local = int(cod_local) if cod_local else None
