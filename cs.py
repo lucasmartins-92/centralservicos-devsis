@@ -3,6 +3,8 @@ from urls.adm.setor import bp_setor
 from urls.adm.servico import bp_serv
 from urls.adm.tipo_ocorrencia import bp_tipo_ocorrencia
 from urls.adm.local import bp_local
+from urls.adm.emp import bp_emp
+from urls.adm.pre import bp_pre
 
 app = Flask(__name__)
 
@@ -10,6 +12,8 @@ app.register_blueprint(bp_setor)
 app.register_blueprint(bp_serv)
 app.register_blueprint(bp_tipo_ocorrencia)
 app.register_blueprint(bp_local)
+app.register_blueprint(bp_emp)
+app.register_blueprint(bp_pre)
 
 
 @app.route("/")
