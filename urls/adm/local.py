@@ -7,7 +7,7 @@ bp_local = Blueprint(
 )
 
 
-@bp_local.route("/incluir")  # /adm/local/incluir
+@bp_local.route("/incluir")
 def incluir():
     dao_setor = SetorDAO()
     lst_setores = dao_setor.read_by_filters([("sts_setor", "=", "A")])
@@ -16,7 +16,7 @@ def incluir():
     )
 
 
-@bp_local.route("/salvar_incluir", methods=["POST"])  # /adm/local/salvar_incluir
+@bp_local.route("/salvar_incluir", methods=["POST"])
 def salvar_incluir():
     dao = LocalDAO()
     local = dao.new_object()
@@ -42,7 +42,7 @@ def salvar_incluir():
     )
 
 
-@bp_local.route("/consultar")  # /adm/local/consultar
+@bp_local.route("/consultar")
 def consultar():
     dao_setor = SetorDAO()
     setores = dao_setor.read_by_filters([("sts_setor", "=", "A")])
@@ -51,7 +51,7 @@ def consultar():
     )
 
 
-@bp_local.route("/roda_consultar", methods=["POST"])  # /adm/local/roda_consultar
+@bp_local.route("/roda_consultar", methods=["POST"])
 def roda_consultar():
     nme_local = request.form["nme_local"]
     cod_setor = request.form.get("cod_setor", "")
@@ -115,7 +115,6 @@ def salvar_alterar():
             filtro_usado="",
         )
 
-    # Atualiza campos
     obj.nme_local = request.form["nme_local"]
     obj.lat_local = request.form["lat_local"]
     obj.lgt_local = request.form["lgt_local"]
@@ -129,7 +128,6 @@ def salvar_alterar():
         msg = "Erro ao tentar atualizar o local!"
         css_msg = "erro"
 
-    # Recarrega listas auxiliares e objeto
     dao_setor = SetorDAO()
     lst_setores = dao_setor.read_by_filters([("sts_setor", "=", "A")])
     obj = dao.read_by_idt(idt)
@@ -139,7 +137,7 @@ def salvar_alterar():
     )
 
 
-@bp_local.route("/atualizar")  # /adm/local/atualizar
+@bp_local.route("/atualizar")
 def atualizar():
     dao_setor = SetorDAO()
     setores = dao_setor.read_by_filters([("sts_setor", "=", "A")])
@@ -153,7 +151,7 @@ def atualizar():
     )
 
 
-@bp_local.route("/roda_atualizar", methods=["POST"])  # /adm/local/roda_atualizar
+@bp_local.route("/roda_atualizar", methods=["POST"])
 def roda_atualizar():
     nme_local = request.form["nme_local"]
     cod_setor = request.form.get("cod_setor", "")

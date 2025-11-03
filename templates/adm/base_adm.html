@@ -3,6 +3,11 @@
 <head>
    <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }</style>
    <title>{% block title %}Central de Serviços{% endblock %}</title>
    <link rel="stylesheet" href="{{ url_for('static', filename='estilo_adm.css') }}">
    {% block styles %}{% endblock %}

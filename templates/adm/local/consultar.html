@@ -41,9 +41,9 @@
                         {% for item in locais %}
                         <tr>
                             <td>{{ item.idt_local }}</td>
-                            <td>{{ item.nme_local }}</td>
-                            <td>{{ item.lat_local }}</td>
-                            <td>{{ item.lgt_local }}</td>
+                            <td>{{ item.nme_local}}</td>
+                            <td>{{ item.lat_local | round(1) }} </td>
+                            <td>{{ item.lgt_local | round(1) }}</td>
                             <td>{{ item.tt_setor.nme_setor if item.tt_setor else item.cod_setor }}</td>
                             <td>{{ "Ativo" if item.sts_local == 'A' else "Inativo" }}</td>
                         </tr>

@@ -5,12 +5,12 @@ bp_tipo_ocorrencia = Blueprint('tipo_ocorrencia', __name__, template_folder="tem
                                url_prefix='/adm/tipo_ocorrencia')
 
 
-@bp_tipo_ocorrencia.route('/incluir')  # /adm/tipo_ocorrencia/incluir
+@bp_tipo_ocorrencia.route('/incluir')
 def incluir():
     return render_template('adm/tipo_ocorrencia/incluir.html', msg="", css_msg="")
 
 
-@bp_tipo_ocorrencia.route('/salvar_incluir', methods=['POST'])  # /adm/tipo_ocorrencia/salvar_incluir
+@bp_tipo_ocorrencia.route('/salvar_incluir', methods=['POST'])
 def salvar_incluir():
     dao = TipoOcorrenciaDAO()
     tipo_ocorrencia = dao.new_object()
@@ -30,12 +30,12 @@ def salvar_incluir():
     return render_template('adm/tipo_ocorrencia/incluir.html', msg=msg, css_msg=css_msg)
 
 
-@bp_tipo_ocorrencia.route('/consultar')  # /adm/tipo_ocorrencia/consultar
+@bp_tipo_ocorrencia.route('/consultar')
 def consultar():
     return render_template('adm/tipo_ocorrencia/consultar.html', tipos_ocorrencia=[], filtro_usado='')
 
 
-@bp_tipo_ocorrencia.route('/roda_consultar', methods=['POST'])  # /adm/tipo_ocorrencia/roda_consultar
+@bp_tipo_ocorrencia.route('/roda_consultar', methods=['POST'])
 def roda_consultar():
     nme_tipo_ocorrencia = request.form['nme_tipo_ocorrencia']
     filtro_usado = f"Nome do Tipo de Ocorrência: {nme_tipo_ocorrencia or 'Não informado'}"
@@ -47,12 +47,12 @@ def roda_consultar():
                            filtro_usado=filtro_usado)
 
 
-@bp_tipo_ocorrencia.route('/atualizar')  # /adm/tipo_ocorrencia/atualizar
+@bp_tipo_ocorrencia.route('/atualizar')
 def atualizar():
     return render_template('adm/tipo_ocorrencia/atualizar.html', tipos_ocorrencia=[], filtro_usado='', msg='', css_msg='')
 
 
-@bp_tipo_ocorrencia.route('/roda_atualizar', methods=['POST'])  # /adm/tipo_ocorrencia/roda_atualizar
+@bp_tipo_ocorrencia.route('/roda_atualizar', methods=['POST'])
 def roda_atualizar():
     nme_tipo_ocorrencia = request.form['nme_tipo_ocorrencia']
     filtro_usado = f"Nome do Tipo de Ocorrência: {nme_tipo_ocorrencia}"
@@ -97,7 +97,6 @@ def salvar_alterar():
         return render_template('adm/tipo_ocorrencia/atualizar.html', msg='Tipo de ocorrência não encontrado.',
                                css_msg='erro', tipos_ocorrencia=[], filtro_usado='')
 
-    # Atualiza os campos com os valores do formulário
     tipo.nme_tipo_ocorrencia = request.form['nme_tipo_ocorrencia']
     tipo.tpo_tipo_ocorrencia = request.form['tpo_tipo_ocorrencia']
     tipo.txt_modelo_ocorrencia = request.form['txt_modelo_ocorrencia']
@@ -110,6 +109,5 @@ def salvar_alterar():
         msg = 'Erro ao tentar atualizar o tipo de ocorrência!'
         css_msg = 'erro'
 
-    # Recarrega o objeto atualizado e renderiza a página de alteração com mensagem
     tipo = dao.read_by_idt(idt)
     return render_template('adm/tipo_ocorrencia/alterar.html', tipo_ocorrencia=tipo, msg=msg, css_msg=css_msg)

@@ -11,7 +11,7 @@ def incluir():
     return render_template("adm/setor/incluir.html", msg="", css_msg="")
 
 
-@bp_setor.route("/salvar_incluir", methods=["POST"])  # /adm/setor/incluir
+@bp_setor.route("/salvar_incluir", methods=["POST"])
 def salvar_incluir():
     dao = SetorDAO()
     setor = dao.new_object()
@@ -34,7 +34,7 @@ def consultar():
     return render_template("adm/setor/consultar.html", setores=[], filtro_usado="")
 
 
-@bp_setor.route("/roda_consultar", methods=["POST"])  # /adm/setor/roda_consultar
+@bp_setor.route("/roda_consultar", methods=["POST"])
 def roda_consultar():
     nme_setor = request.form["nme_setor"]
     filtro_usado = f"Nome do Setor: {nme_setor}"
@@ -45,12 +45,12 @@ def roda_consultar():
     )
 
 
-@bp_setor.route("/atualizar")  # /adm/setor/atualizar
+@bp_setor.route("/atualizar")
 def atualizar():
     return render_template("adm/setor/atualizar.html", setores=[], filtro_usado="")
 
 
-@bp_setor.route("/roda_atualizar", methods=["POST"])  # /adm/setor/rodar_atualizar
+@bp_setor.route("/roda_atualizar", methods=["POST"])
 def roda_atualizar():
     nme_setor = request.form["nme_setor"]
     filtro_usado = f"Nome do Setor: {nme_setor}"
@@ -78,12 +78,12 @@ def excluir(idt):
         filtro_usado="",
     )
 
-@bp_setor.route('/alterar/<int:idt>')  # /adm/setor/alterar/número
+@bp_setor.route('/alterar/<int:idt>')
 def alterar(idt):
    dao = SetorDAO()
    setor = dao.read_by_idt(idt)
    return render_template('adm/setor/alterar.html', msg="", css_msg="", setor=setor)
-@bp_setor.route('/salva_alterar', methods=['POST'])  # /adm/setor/alterar/número
+@bp_setor.route('/salva_alterar', methods=['POST'])
 def salva_alterar():
    dao = SetorDAO()
    setor = dao.read_by_idt(int(request.form['idt_setor']))

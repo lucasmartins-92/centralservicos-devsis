@@ -6,7 +6,7 @@ from database.servico_dao import ServicoDAO
 bp_serv = Blueprint("serv", __name__, url_prefix="/adm/serv")
 
 
-@bp_serv.route("/incluir")  # /adm/serv/incluir
+@bp_serv.route("/incluir")
 def incluir():
     dao = SetorDAO()
     lst_setores = dao.read_by_filters([("sts_setor", "=", "A")])
@@ -41,7 +41,7 @@ def salvar_incluir():
     )
 
 
-@bp_serv.route("/consultar")  # /adm/serv/consultar
+@bp_serv.route("/consultar")
 def consultar():
     dao_setor = SetorDAO()
     setores = dao_setor.read_by_filters([("sts_setor", "=", "A")])
@@ -50,7 +50,7 @@ def consultar():
     )
 
 
-@bp_serv.route("/roda_consultar", methods=["POST"])  # /adm/serv/rodar_consultar
+@bp_serv.route("/roda_consultar", methods=["POST"])
 def roda_consultar():
     nme_servico = request.form["nme_servico"]
     cod_setor = request.form["cod_setor"]
@@ -74,7 +74,7 @@ def roda_consultar():
     )
 
 
-@bp_serv.route("/atualizar")  # /adm/serv/atualizar
+@bp_serv.route("/atualizar")
 def atualizar():
     dao_setor = SetorDAO()
     setores = dao_setor.read_by_filters([("sts_setor", "=", "A")])
@@ -83,7 +83,7 @@ def atualizar():
     )
 
 
-@bp_serv.route("/roda_atualizar", methods=["POST"])  # /adm/serv/rodar_atualizar
+@bp_serv.route("/roda_atualizar", methods=["POST"])
 def roda_atualizar():
     nme_servico = request.form["nme_servico"]
     cod_setor = request.form["cod_setor"]
@@ -122,7 +122,7 @@ def excluir(idt):
     )
 
 
-@bp_serv.route("/alterar/<int:idt>")  # /adm/serv/alterar/número
+@bp_serv.route("/alterar/<int:idt>")
 def alterar(idt):
     dao = ServicoDAO()
     servico = dao.read_by_idt(idt)
@@ -134,7 +134,7 @@ def alterar(idt):
     )
 
 
-@bp_serv.route("/salva_alterar", methods=["POST"])  # /adm/setor/alterar/número
+@bp_serv.route("/salva_alterar", methods=["POST"])
 def salva_alterar():
     dao = ServicoDAO()
     servico = dao.read_by_idt(int(request.form["idt_servico"]))
